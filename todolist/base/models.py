@@ -45,3 +45,10 @@ class Contact(models.Model):
     actions = models.TextField(null=True, blank = True)
     result = models.TextField(null=True, blank = True)
     customer = models.ForeignKey(Customer, on_delete= models.CASCADE, null = True, blank = True)
+
+class SalesLog(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    amount = models.FloatField(default = 0)
+    invoice = models.CharField(max_length = 200)
+    notes = models.TextField(null=True, blank = True)
