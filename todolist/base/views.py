@@ -4,7 +4,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.urls import reverse_lazy
-
+from django import forms
 from django.contrib.auth.views import LoginView
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,9 +12,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import login
+from django.db import models as db_models
+from django.forms import ModelForm
+
+from django.contrib.auth.models import User
 
 from .models import Task
 
+class RegisterForm(ModelForm):
+    username = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ["username", "password"]
 class CustomLoginView( LoginView):
    template_name = 'base/login.html'
    fields ='__all__'
@@ -24,6 +34,7 @@ class CustomLoginView( LoginView):
 
 class RegisterPage(FormView):
     template_name = 'base/register.html'
+    # form_class = RegisterForm
     form_class = UserCreationForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('tasks')
