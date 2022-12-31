@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <table>
+    <tr>
+        <th>Name</th>
+        <th>company</th>
+        <th>Work function</th>
+        <th>phone</th>
+        <th>email</th>
+        <th>address</th>
+        <th>notes</th>
+        <th>lead source</th>
+        <th>lead status</th>
+    </tr>
+    {% for customer in customers %}
+    <tr>
+        <td>{{customer.name}}</td>
+        <td>{{customer.company}}</td>
+        <td>{{customer.work_function}}</td>
+        <td>{{customer.phone}}</td>
+        <td>{{customer.email}}</td>
+        <td>{{customer.address}}</td>
+        <td>{{customer.notes}}</td>
+        <td>{{customer.lead_source}}</td>
+        <td>{{customer.lead_status}}</td>
+
+    </tr>
+        {% empty %}
+            <h3> no item available</h3>
+        {% endfor %}
+
+
+    </table>
+{% endblock content %}

@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
+class Customer_Category(models.Model):
+    category = models.CharField(max_length=200)
 
 class Customer(models.Model):
     COLD = 'Cold'
@@ -24,6 +24,7 @@ class Customer(models.Model):
     ]
     lead_status = models.TextField(null=True, blank = True, choices = lead_status_options, default = WARM)
     user = models.ForeignKey(User, on_delete= models.CASCADE, null = True, blank = True, related_name='user2customer')
+    customer_category = models.ForeignKey(Customer_Category, on_delete= models.CASCADE, null = True, blank = True, related_name='category2customer')
     def __str__(self):
         return self.name
 
