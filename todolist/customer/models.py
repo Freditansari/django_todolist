@@ -30,12 +30,14 @@ class Customer(models.Model):
     def __str__(self):
         return self.name
 
-class Contact(models.Model):
+class ContactLog(models.Model):
     last_contact = models.DateTimeField(auto_now_add = True)
     next_contact = models.DateTimeField()
     actions = models.TextField(null=True, blank = True)
     result = models.TextField(null=True, blank = True)
     customer = models.ForeignKey(Customer, on_delete= models.CASCADE, null = True, blank = True, related_name="user2contact")
+    def __str__(self):
+        return self.actions
 
 class SalesLog(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True, related_name='customer2saleslog')
@@ -43,3 +45,5 @@ class SalesLog(models.Model):
     amount = models.FloatField(default = 0)
     invoice = models.CharField(max_length = 200)
     notes = models.TextField(null=True, blank = True)
+    def __str__(self):
+        return self.notes
