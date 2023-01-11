@@ -5,9 +5,7 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
-    <p>{{request.user}}</p>
-    <a href ="{% url 'logout' %}">logout</a>
-    <hr />
+
     <h1>my todo list</h1>
     <a href="{% url 'task-create' %}"> add task</a>
     <form method ="GET">

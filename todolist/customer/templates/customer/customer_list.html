@@ -2,18 +2,22 @@
 
 {% block content %}
 
-    <table>
+    <table class="table">
+        <thead>
     <tr>
         <th>Name</th>
-        <th>company</th>
+        <th>Company</th>
         <th>Work function</th>
-        <th>phone</th>
-        <th>email</th>
-        <th>address</th>
-        <th>notes</th>
-        <th>lead source</th>
-        <th>lead status</th>
+        <th>Phone</th>
+        <th>E-Mail</th>
+<!--        <th>address</th>-->
+        <th>Notes</th>
+        <th>Lead Source</th>
+        <th>Lead Status</th>
+        <th>Category</th>
     </tr>
+    </thead>
+        <tbody>
     {% for customer in customers %}
     <tr>
         <td>{{customer.name}}</td>
@@ -21,16 +25,20 @@
         <td>{{customer.work_function}}</td>
         <td>{{customer.phone}}</td>
         <td>{{customer.email}}</td>
-        <td>{{customer.address}}</td>
+<!--        <td>{{customer.address}}</td>-->
         <td>{{customer.notes}}</td>
         <td>{{customer.lead_source}}</td>
         <td>{{customer.lead_status}}</td>
+        <td>{{customer.customer_category}}</td>
+        <td><a href="{% url 'customer-update' customer.id %}">Edit</a></td>
+        <td><a href="{% url 'customer-delete' customer.id %}">Delete</a></td>
+
 
     </tr>
+
+    </tbody>
         {% empty %}
             <h3> no item available</h3>
-        {% endfor %}
-
-
+            {% endfor %}
     </table>
 {% endblock content %}
