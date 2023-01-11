@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from .models import Customer
+from .models import Customer, ContactLog
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -40,4 +40,13 @@ class DeleteView(LoginRequiredMixin, DeleteView):
     model=Customer
     fields ='__all__'
     success_url=reverse_lazy('customers')
+
+
+class ContactLogCreate(LoginRequiredMixin, CreateView):
+    model = ContactLog
+    template_name = 'customer/contactlog-create.html'
+    fields= '__all__'
+    def form_valid(self,form):
+        form.instance.user = self.request.user
+        return super(ContactLogCreate, self).form_valid(form)
     

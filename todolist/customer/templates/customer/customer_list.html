@@ -34,7 +34,7 @@
         <tbody>
     {% for customer in filter.qs %}
     <tr>
-        <td>{{customer.name}}</td>
+        <td><a href="{%url 'contact-log-create' customer.id%}">{{customer.name}}</a></td>
         <td>{{customer.company}}</td>
         <td>{{customer.work_function}}</td>
         <td>{{customer.phone}}</td>
