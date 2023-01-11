@@ -4,11 +4,18 @@ from .models import Customer
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+
+from .filters import CustomerFilter
 # Create your views here.
 
 class CustomerList(LoginRequiredMixin, ListView):
     model=Customer
     context_object_name = 'customers'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter"] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 class CustomerCreate(LoginRequiredMixin, CreateView):
     model=Customer
