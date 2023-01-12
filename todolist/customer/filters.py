@@ -23,3 +23,9 @@ class CustomerFilter(django_filters.FilterSet):
         fields = '__all__'
         # fields =['name', 'company', 'work_function', 'phone', 'email']
 
+class ContactLogsFilter(django_filters.FilterSet):
+    next_contact = django_filters.DateFilter('next_contact', label='Next Contact')
+    class Meta:
+        model = ContactLog
+        fields='__all__'
+        exclude ='last_contact'

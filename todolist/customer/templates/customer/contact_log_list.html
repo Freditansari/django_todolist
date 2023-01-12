@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Filter
+  </button>
+<div class="collapse" id ='collapseExample'>
+    <div class="card card-body">
+    <form action="" method="get">
+        {{filter.form | crispy}}
+        <button type="submit" >Filter </button>
+    </form>
+</div>
+
+</div>
+
+    <table class="table">
+        <thead>
+    <tr>
+        <th>Next Contact</th>
+        <th>Actions</th>
+        <th>Result</th>
+        <th>Customer</th>
+
+    </tr>
+    </thead>
+    <tbody>
+        {% for contact_log in filter.qs %}
+        <tr>
+             <td>{{contact_log.next_contact}}</td>
+             <td>{{contact_log.actions}}</td>
+             <td>{{contact_log.result}}</td>
+             <td>{{contact_log.customer}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+{% endblock content %}

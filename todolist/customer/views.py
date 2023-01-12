@@ -4,10 +4,13 @@ from .models import Customer, ContactLog
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.db.models import Q
 
-from .filters import CustomerFilter
+from .filters import CustomerFilter, ContactLogsFilter
 
 from .forms import ContactLogForm
+
+from datetime import date
 # Create your views here.
 
 class CustomerList(LoginRequiredMixin, ListView):
@@ -48,8 +51,21 @@ class ContactLogCreate(LoginRequiredMixin, CreateView):
     model = ContactLog
     template_name = 'customer/contactlog-create.html'
     form_class = ContactLogForm
+    success_url = reverse_lazy('customers')
+
     def form_valid(self,form):
-        # form = ContactLogForm(request.POST)
-        form.instance.user = self.request.user
+        contact_log = form.save(commit=False)
+        contact_log.customer_id = self.kwargs['pk']
+        contact_log.save()
         return super(ContactLogCreate, self).form_valid(form)
-    
+
+class ContactLogList(LoginRequiredMixin, ListView):
+    model = ContactLog
+    context_object_name = 'ContactLogs'
+    template_name = 'customer/contact_log_list.html'
+    def get_context_data(self, **kwargs):
+        current_date = date.today()
+        context = super().get_context_data(**kwargs)
+        context['ContactLogs'] = context['ContactLogs'].filter(next_contact__gt= current_date).order_by('next_contact')
+        context["filter"] = ContactLogsFilter(self.request.GET, queryset=self.get_queryset())
+        return context

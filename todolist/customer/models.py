@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Customer_Category(models.Model):
     category = models.CharField(max_length=200)
@@ -31,11 +32,12 @@ class Customer(models.Model):
         return self.name
 
 class ContactLog(models.Model):
-    last_contact = models.DateTimeField(auto_now_add = True)
+    last_contact = models.DateTimeField(default=datetime.now, blank = True)
     next_contact = models.DateTimeField()
     actions = models.TextField(null=True, blank = True)
     result = models.TextField(null=True, blank = True)
     customer = models.ForeignKey(Customer, on_delete= models.CASCADE, null = True, blank = True, related_name="user2contact")
+    is_done = models.BooleanField(default = False)
     def __str__(self):
         return self.actions
 
