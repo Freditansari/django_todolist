@@ -6,6 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
 from .filters import CustomerFilter
+
+from .forms import ContactLogForm
 # Create your views here.
 
 class CustomerList(LoginRequiredMixin, ListView):
@@ -45,8 +47,9 @@ class DeleteView(LoginRequiredMixin, DeleteView):
 class ContactLogCreate(LoginRequiredMixin, CreateView):
     model = ContactLog
     template_name = 'customer/contactlog-create.html'
-    fields= '__all__'
+    form_class = ContactLogForm
     def form_valid(self,form):
+        # form = ContactLogForm(request.POST)
         form.instance.user = self.request.user
         return super(ContactLogCreate, self).form_valid(form)
     
